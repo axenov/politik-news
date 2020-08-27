@@ -14,3 +14,5 @@ To test model run:
 ```bash
 python test.py
 ```
+
+Demo will be ready soon.
