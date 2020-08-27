@@ -3,6 +3,7 @@ from nlp import load_dataset
 from tqdm import tqdm
 import torch
 import argparse
+import os
 
 # Construct the argument parser
 ap = argparse.ArgumentParser()
@@ -12,13 +13,20 @@ ap.add_argument("-batch_size", "--batch_size", required=True,
    help="Batch size")
 ap.add_argument("-num_epochs", "--num_epochs", required=True,
    help="Number of epochs")
+ap.add_argument("-data_folder", "--data_folder", required=True,
+   help="Path to the dataset")
+ap.add_argument("-model_folder", "--model_folder", required=True,
+   help="Path to the model")
+
 args = vars(ap.parse_args())
 
-BATCH_SIZE = args['batch_size']
-NUM_EPOCHS = args['num_epochs']
+BATCH_SIZE = int(args['batch_size'])
+NUM_EPOCHS = int(args['num_epochs'])
+DATA_FOLDER = args['data_folder']
+MODEL_FOLDER = args['model_folder']
 
 #Load dataset
-dataset = load_dataset('de_politik_news.py', cache_dir='.de-politic-news')
+dataset = load_dataset(os.path.join(DATA_FOLDER, 'de_politik_news.py'), cache_dir=os.path.join(DATA_FOLDER, '.de-politic-news'))
 
 #Tokenize test and validation datasets
 tokenizer = BertTokenizer.from_pretrained('bert-base-german-cased')
@@ -50,8 +58,8 @@ for epoch in range(NUM_EPOCHS):
         loss.backward()
         optimizer.step()
         optimizer.zero_grad()
-        if i % 100 == 0:
-            model.save_pretrained('./model')
+        if i % 1000 == 0:
+            model.save_pretrained(MODEL_FOLDER)
             print(f"loss: {loss}")
 
-model.save_pretrained('./model')
+model.save_pretrained(MODEL_FOLDER)
