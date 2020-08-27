@@ -22,7 +22,7 @@ python test.py -data_folder="data" model_folder="model"
 
 <p align="center">
     <br>
-    <img src="https://github.com/axenov/politik-news/blob/master/docs/imgs/covid.png" width="400"/>
+    <img src="https://github.com/axenov/politik-news/blob/master/docs/imgs/covid.png" width="700"/>
     <br>
 <p>
 
