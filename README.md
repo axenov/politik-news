@@ -17,7 +17,7 @@ To test model run:
 ```bash
 python test.py -data_folder="data" model_folder="model"
 ```
-### Visualization of BOW representation of the dataset
+### t-SNE on SVD of BOW representation of the dataset
 
 <p align="center">
     <br>
