@@ -17,6 +17,13 @@ To test model run:
 ```bash
 python test.py -data_folder="data" model_folder="model"
 ```
+### Visualization of BOW representation of the dataset
+
+<p align="center">
+    <br>
+    <img src="https://github.com/axenov/politik-news/blob/master/docs/imgs/SVD.png" width="700"/>
+    <br>
+<p>
 
 ### Effect of Covid-19 on German news
 
