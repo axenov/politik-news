@@ -24,6 +24,8 @@ import json
 
 import nlp
 
+import pathlib
+
 
 _CITATION = """
 DFKI
@@ -34,13 +36,11 @@ German political news dataset
 """
 _URL_dataset = ""
 
-_AUTHORS = "author"
-_DATE = "date"
 _TITLE = "title"
-_SUMMARY = "summary"
 _TEXT = "text"
 _SOURCE = "source"
-_URL = "url"
+_FOCUS = "focus"
+_DATE = "date"
 
 _BIAS = 'bias'
 _QUALITY = 'quality'
@@ -71,13 +71,11 @@ class PolitikNews(nlp.GeneratorBasedBuilder):
         info = nlp.DatasetInfo(
             description=_DESCRIPTION,
             features=nlp.Features({
-            	_AUTHORS: nlp.Value("string"),
-            	_DATE: nlp.Value("string"),
             	_TITLE: nlp.Value("string"),
-            	_SUMMARY: nlp.Value("string"),
             	_TEXT: nlp.Value("string"),
             	_SOURCE: nlp.Value("string"),
-            	_URL: nlp.Value("string"),
+            	_FOCUS: nlp.Value("string"),
+            	_DATE: nlp.Value("string"),
             	_BIAS: nlp.Value("float32"),
             	_QUALITY: nlp.Value("float32"),
             	_CLASS: nlp.Value("string"),
@@ -102,12 +100,18 @@ class PolitikNews(nlp.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         """Returns SplitGenerators."""
         #data_path = dl_manager.download_and_extract(_URL_dataset)
-        data_path = 'data_preprocessed/'
+        data_path = 'data/'
+
         return [
             nlp.SplitGenerator(name=nlp.Split.TRAIN, gen_kwargs={"path": os.path.join(data_path, "train.jsonl")},),
             nlp.SplitGenerator(name=nlp.Split.VALIDATION, gen_kwargs={"path": os.path.join(data_path, "validation.jsonl")},),
             nlp.SplitGenerator(name=nlp.Split.TEST, gen_kwargs={"path": os.path.join(data_path, "test.jsonl")},),
         ]
+        #return [
+        #    nlp.SplitGenerator(name=nlp.Split.TRAIN, gen_kwargs={"path": "train.jsonl"},),
+        #    nlp.SplitGenerator(name=nlp.Split.VALIDATION, gen_kwargs={"path": "validation.jsonl"},),
+        #    nlp.SplitGenerator(name=nlp.Split.TEST, gen_kwargs={"path": "test.jsonl"},),
+        #]
 
     def _generate_examples(self, path=None):
         """Yields examples."""
@@ -115,13 +119,11 @@ class PolitikNews(nlp.GeneratorBasedBuilder):
             for i, line in enumerate(f):
                 elem = json.loads(line)
                 yield i, {
-                    _AUTHORS: elem['authors'],
-                    _DATE: elem['date_publish'],
                     _TITLE: elem['title'],
-                    _SUMMARY: elem['description'],
-                    _TEXT: elem['maintext'],
+                    _TEXT: elem['text'],
                     _SOURCE: elem['source_domain'],
-                    _URL: elem['url'],
+                    _FOCUS: elem['focus'],
+                    _DATE: elem['date_publish'],
                     _BIAS: elem['bias'],
                     _QUALITY: elem['quality'],
                     _CLASS: elem['class'],

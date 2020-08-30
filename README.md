@@ -3,7 +3,17 @@ This project is the first attemp to do Political Bias classification of German n
 
 We clawled out data from various German news sites using [news-please library](https://github.com/fhamborg/news-please). After that we manually cleaned the data and labeled it using [Medienkompass](https://medienkompass.org/). Data is organised as [HuggingFace nlp library](https://github.com/huggingface/nlp) dataset. 
 
-Due to the copyright issues we can not publish the data, but soon we will published the list of urls you can use to build this dataset by your own.
+Due to the copyright issues we can not publish the data, but provided the list of urls you can use to build this dataset by your own.
+To download all the data run:
+
+'''python
+NewsPlease.from_file('data/urls.txt')
+'''
+
+Then run (under development):
+'''
+python preprocess.ty -data_folder='path/to/your/downloaded/data'
+'''
 
 Our system uses German BERT from [HuggingFace Transformers library](https://github.com/huggingface/transformers) as the pre-trained model to fine-tune.
 
