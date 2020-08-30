@@ -27,6 +27,22 @@ To test model run:
 ```bash
 python test.py -data_folder="data" model_folder="model"
 ```
+
+To process a single arbitary text and get the list of the most important words run:
+```bash
+python predict.py -file_path="text_sample.txt" -model_folder="path/to/the/model" -explain=true
+```
+
+or call in python:
+```python
+from BiasPredictor import biasPredictor
+predictor = biasPredictor("path/to/the/model")
+prediction = predictor.predict(text = "Trump ist Schlecht", explain=True)
+print(prediction)
+#outut: ('center-rignt',[Trump])
+```
+
+
 ### t-SNE on SVD of BOW representation of the dataset
 
 <p align="center">
