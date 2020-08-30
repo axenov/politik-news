@@ -6,14 +6,14 @@ We clawled out data from various German news sites using [news-please library](h
 Due to the copyright issues we can not publish the data, but provided the list of urls you can use to build this dataset by your own.
 To download all the data run:
 
-'''python
+```python
 NewsPlease.from_file('data/urls.txt')
-'''
+```
 
 Then run (under development):
-'''
+```python
 python preprocess.ty -data_folder='path/to/your/downloaded/data'
-'''
+```
 
 Our system uses German BERT from [HuggingFace Transformers library](https://github.com/huggingface/transformers) as the pre-trained model to fine-tune.
 
