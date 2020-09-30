@@ -1,46 +1,34 @@
 # Political Bias Classification of German Media
-This project is the first attemp to do Political Bias classification of German news.
+This project is the first attempt to do Political Bias classification of German news.
 
-We clawled out data from various German news sites using [news-please library](https://github.com/fhamborg/news-please). After that we manually cleaned the data and labeled it using [Medienkompass](https://medienkompass.org/). Data is organised as [HuggingFace nlp library](https://github.com/huggingface/nlp) dataset. 
+We crawled out data from various German news sites using [news-please library](https://github.com/fhamborg/news-please). After that, we manually cleaned the data and labeled it using [Medienkompass](https://medienkompass.org/). Then the dataset was preprocessed using [HuggingFace NLP library](https://github.com/huggingface/nlp). 
 
-Due to the copyright issues we can not publish the data, but provided the list of urls you can use to build this dataset by your own.
+Due to copyright issues, we can not publish the data, but we provided the list of URLs you can use to build this dataset on your own.
 To download all the data run:
 
 ```python
-NewsPlease.from_file('data/urls.txt')
+NewsPlease.from_file('urls/urls.txt')
 ```
-
-Then run (under development):
+Then run the preprocessing script:
 ```python
-python preprocess.ty -data_folder='path/to/your/downloaded/data'
+python preprocess.py -data_folder='path/to/your/downloaded/data'
 ```
-
-Our system is based on Random Forest algorithm applied to BERT and TF-IDF features.
-Our implementation of BERT uses [HuggingFace Transformers library](https://github.com/huggingface/transformers).
-
-
-To fine-tune pretrained BERT model run:
+We evaluated several classification models on the dataset, using Bag-of-Words, TF-IDF, and BERT features. For reproduction the former two, run *BOW_baseline.ipynb* and *TFIDF_baseline.ipynb* notebooks. To train BERT-based models you need to fine-tune [HuggingFace](https://github.com/huggingface/transformers) implementation of German BERT.
 ```bash
 python train.py -data_folder="data" model_folder="models/BERT" -batch_size=8 -num_epochs=2
 ```
+After that run *BERT_baseline.ipynb* notebook.
 
-To test this model on the test data run:
+Using our two based models for TF-IDF and BERT features, we implemented the demo system that can predict the political bias of a single arbitary text and generate the list of the words that pushes the system to make the decision. The models can be download from [here](https://drive.google.com/file/d/1dUu9sYEXU0C5CHzGPocoDPCCbVrQD1Q8/view?usp=sharing).
+To use the system run:
 ```bash
-python test.py -data_folder="data" model_folder="models/BERT"
+python predict.py -file_path="text_sample.txt" -method="tfidf" -explain=False
 ```
-
-To process a single arbitary text and get the list of the most important words run:
-```bash
-python predict.py -file_path="text_sample.txt" -method="tfidf" -explain=true
-```
-
 or call in python:
 ```python
 from BiasPredictor import biasPredictor
-predictor = biasPredictor("path/to/the/model")
-prediction = predictor.predict(text = "Trump ist Schlecht", explain=True)
-print(prediction)
-#outut: ('center-rignt',[Trump])
+predictor = biasPredictor("bert")
+prediction = predictor.predict(text = "Ein politischer Text", explain=True)
 ```
 
 
