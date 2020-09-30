@@ -1,6 +1,6 @@
 from transformers import BertTokenizer, BertForSequenceClassification
 from nlp import load_dataset
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, f1_score, classification_report
 import torch
 import argparse
 import os
@@ -20,8 +20,8 @@ args = vars(ap.parse_args())
 DATA_FOLDER = args['data_folder']
 MODEL_FOLDER = args['model_folder']
 #Load dataset
-dataset = load_dataset(os.path.join(DATA_FOLDER, 'de_politik_news.py'), cache_dir=os.path.join(DATA_FOLDER, '.de-politic-news'))
-
+#dataset = load_dataset(os.path.join(DATA_FOLDER, 'de_politik_news.py'), cache_dir=os.path.join(DATA_FOLDER, '.de-politic-news'))
+dataset = load_dataset('de_politik_news.py', cache_dir=DATA_FOLDER)
 #Tokenize test dataset
 tokenizer = BertTokenizer.from_pretrained('bert-base-german-cased')
 encoded_test = dataset['test'].map(lambda examples: tokenizer(examples['text'], padding='max_length', truncation=True), batched=True)
@@ -47,4 +47,10 @@ for i in range(len(encoded_test)):
 
 #Calculate accuracy
 accuracy = accuracy_score(class_test, model_test)
+f1_micro = f1_score(class_test, model_test, average = 'micro')
+f1_macro = f1_score(class_test, model_test, average = 'macro')
+report = classification_report(class_test, model_test)
 print(f'accuracy: {accuracy}')
+print(f'F1-micro: {f1_micro}')
+print(f'F1-macro: {f1_macro}')
+print(f'Report: {report}')

@@ -11,28 +11,31 @@ def str2bool(v):
     else:
         raise argparse.ArgumentTypeError('Boolean value expected.')
 
-def main(file_path, model_path, explain = False):
-	predictor = biasPredictor(model_path)
-	pol_class, explanation = predictor.predict(file_path = file_path, explain = explain)
+def main(file_path, method, explain = False):
+	predictor = biasPredictor(method)
+	prediction = predictor.predict(file_path = file_path, explain = explain)
 
-	print(f'Bias: {pol_class}')
-	if explanation != None:
-		key_phrases = "\n"+"\n".join(explanation)
+	if explain:
+		print(f'Bias: {prediction[0]}')
+		key_phrases = "\n"+"\n".join(prediction[1])
 		print(f'Key phrases: {key_phrases}')
+	else:
+		print(f'Bias: {prediction}')
+
 
 
 if __name__=='__main__':
 	ap = argparse.ArgumentParser()
 	ap.add_argument('-file_path',"--file_path", required=True, help="Path to the text file")
-	ap.add_argument('-model_folder',"--model_folder", required=True, help="Math to the model")
-	ap.add_argument('-explain',"--explain",type=str2bool, help="If model explanation needed")
+	ap.add_argument('-method',"--method", required=True, help="Features used by the model (bert or tfidf)")
+	ap.add_argument('-explain',"--explain",type=str2bool, help="Set if model explanation is needed")
 
 	args = vars(ap.parse_args())
 	file_path = args['file_path']
-	model_path = args['model_folder']
+	method = args['method']
 	
 	if 'explain' in args:
 		explain = args['explain']
 	else:
 		explain = False
-	main(file_path, model_path, explain)
+	main(file_path, method, explain)

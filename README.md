@@ -15,22 +15,23 @@ Then run (under development):
 python preprocess.ty -data_folder='path/to/your/downloaded/data'
 ```
 
-Our system uses German BERT from [HuggingFace Transformers library](https://github.com/huggingface/transformers) as the pre-trained model to fine-tune.
+Our system is based on Random Forest algorithm applied to BERT and TF-IDF features.
+Our implementation of BERT uses [HuggingFace Transformers library](https://github.com/huggingface/transformers).
 
 
-To train model run:
+To fine-tune pretrained BERT model run:
 ```bash
-python train.py -data_folder="data" model_folder="model" -batch_size=8 -num_epochs=2
+python train.py -data_folder="data" model_folder="models/BERT" -batch_size=8 -num_epochs=2
 ```
 
-To test model run:
+To test this model on the test data run:
 ```bash
-python test.py -data_folder="data" model_folder="model"
+python test.py -data_folder="data" model_folder="models/BERT"
 ```
 
 To process a single arbitary text and get the list of the most important words run:
 ```bash
-python predict.py -file_path="text_sample.txt" -model_folder="path/to/the/model" -explain=true
+python predict.py -file_path="text_sample.txt" -method="tfidf" -explain=true
 ```
 
 or call in python:

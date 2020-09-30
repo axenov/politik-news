@@ -24,7 +24,6 @@ import json
 
 import nlp
 
-import pathlib
 
 
 _CITATION = """
@@ -100,18 +99,12 @@ class PolitikNews(nlp.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         """Returns SplitGenerators."""
         #data_path = dl_manager.download_and_extract(_URL_dataset)
-        data_path = 'data/'
 
         return [
-            nlp.SplitGenerator(name=nlp.Split.TRAIN, gen_kwargs={"path": os.path.join(data_path, "train.jsonl")},),
-            nlp.SplitGenerator(name=nlp.Split.VALIDATION, gen_kwargs={"path": os.path.join(data_path, "validation.jsonl")},),
-            nlp.SplitGenerator(name=nlp.Split.TEST, gen_kwargs={"path": os.path.join(data_path, "test.jsonl")},),
+            nlp.SplitGenerator(name=nlp.Split.TRAIN, gen_kwargs={"path": "train.jsonl"},),
+            nlp.SplitGenerator(name=nlp.Split.TEST, gen_kwargs={"path":  "test.jsonl"},),
         ]
-        #return [
-        #    nlp.SplitGenerator(name=nlp.Split.TRAIN, gen_kwargs={"path": "train.jsonl"},),
-        #    nlp.SplitGenerator(name=nlp.Split.VALIDATION, gen_kwargs={"path": "validation.jsonl"},),
-        #    nlp.SplitGenerator(name=nlp.Split.TEST, gen_kwargs={"path": "test.jsonl"},),
-        #]
+
 
     def _generate_examples(self, path=None):
         """Yields examples."""

@@ -4,5 +4,7 @@ tqdm
 torch
 jsonlines
 numpy
+nltk
+pickle
 sklearn
 
