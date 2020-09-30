@@ -47,5 +47,3 @@ prediction = predictor.predict(text = "Ein politischer Text", explain=True)
     <img src="https://github.com/axenov/politik-news/blob/master/docs/imgs/covid.png" width="700"/>
     <br>
 <p>
-
-The web demo will be released soon.
