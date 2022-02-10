@@ -1,5 +1,7 @@
 # Political Bias Classification of German Media
-This project is the first attempt to do Political Bias classification of German news.
+This project is the first attempt to do Political Bias classification of German news. 
+
+**Check out paper**: [Fine-grained Classification of Political Bias in German News: A Data Set and Initial Experiments](https://aclanthology.org/2021.woah-1.13/)
 
 We crawled out data from various German news sites using [news-please library](https://github.com/fhamborg/news-please). After that, we manually cleaned the data and labeled it using [Medienkompass](https://medienkompass.org/). Then the dataset was preprocessed using [HuggingFace NLP library](https://github.com/huggingface/nlp). 
 
