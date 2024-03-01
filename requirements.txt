@@ -5,6 +5,4 @@ torch
 jsonlines
 numpy
 nltk
-pickle
-sklearn
-
+scikit-learn==1.2.2
